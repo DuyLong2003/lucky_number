@@ -1,0 +1,74 @@
+const httpStatus = require('http-status');
+const { ${name} } = require('../models');
+const ApiError = require('../utils/ApiError');
+
+/**
+ * Create a ${lname}
+ * @param {Object} ${lname}Body
+ * @returns {Promise<${name}>}
+ */
+const create${name} = async (${lname}Body) => {
+  const ${lname} = await ${name}.create(${lname}Body);
+  return ${lname};
+};
+
+/**
+ * Query for ${lname}s
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @param {string} [options.select] - Select fiels (default = '')
+ * @returns {Promise<QueryResult>}
+ */
+const query${name}s = async (filter, options) => {
+  const ${lname}s = await ${name}.paginate(filter, options);
+  return ${lname}s;
+};
+
+/**
+ * Get ${lname} by id
+ * @param {ObjectId} id
+ * @returns {Promise<${name}>}
+ */
+const get${name}ById = async (id) => ${name}.findById(id);
+
+/**
+ * Update ${lname} by id
+ * @param {ObjectId} ${lname}Id
+ * @param {Object} updateBody
+ * @returns {Promise<${name}>}
+ */
+const update${name}ById = async (${lname}Id, updateBody) => {
+  const ${lname} = await get${name}ById(${lname}Id);
+  if (!${lname}) {
+    throw new ApiError(httpStatus.NOT_FOUND, '${name} not found');
+  }
+
+  Object.assign(${lname}, updateBody);
+  await ${lname}.save();
+  return ${lname};
+};
+
+/**
+ * Delete ${lname} by id
+ * @param {ObjectId} ${lname}Id
+ * @returns {Promise<${name}>}
+ */
+const delete${name}ById = async (${lname}Id) => {
+  const ${lname} = await get${name}ById(${lname}Id);
+  if (!${lname}) {
+    throw new ApiError(httpStatus.NOT_FOUND, '${name} not found');
+  }
+  await ${name}.deleteOne(${lname}._id);
+  return ${lname};
+};
+
+module.exports = {
+  create${name},
+  query${name}s,
+  get${name}ById,
+  update${name}ById,
+  delete${name}ById
+};

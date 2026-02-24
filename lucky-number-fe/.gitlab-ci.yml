@@ -1,0 +1,13 @@
+image: docker:24.0.7
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  script:
+    - cp ./docker/develop/docker-compose.yml ./docker-compose.yml
+    - cp ./docker/develop/env ./.env
+    - docker-compose up -d --build
+  only:
+    refs:
+      - master

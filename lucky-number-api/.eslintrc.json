@@ -1,0 +1,19 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "extends": ["plugin:security/recommended-legacy", "airbnb"],
+  "rules": {
+    "no-console": "error",
+    "func-names": "off",
+    "no-underscore-dangle": "off",
+    "consistent-return": "off",
+    "security/detect-object-injection": "off",
+    "max-len": ["warn", { "code": 150 }],
+    "comma-dangle": "off"
+  }
+}

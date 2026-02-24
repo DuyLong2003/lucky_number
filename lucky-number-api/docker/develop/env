@@ -1,0 +1,30 @@
+# Environment
+NODE_ENV=development
+
+
+# Host name and Port number
+HOST=0.0.0.0
+PORT=3000
+URL=http://localhost
+
+# URL of the Mongo DB
+MONGODB_URL=mongodb://db.bfd.vn:2700/lucky-number
+MONGODB_AUTH_USER=lucky-number
+MONGODB_AUTH_PASS=13r8RiKL7BdaCH8z
+
+
+# JWT
+# JWT secret key
+JWT_SECRET=EjRnjS7EhHdpShHG4qRPUfr2Y8LTHP
+# Number of minutes after which an access token expires
+JWT_ACCESS_EXPIRATION_MINUTES=300
+# Number of days after which a refresh token expires
+JWT_REFRESH_EXPIRATION_DAYS=30
+
+# SMTP configuration options for the email service
+# For testing, you can use a fake SMTP service like Ethereal: https://ethereal.email/create
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USERNAME=no-reply@bfd.vn
+SMTP_PASSWORD="dqcs vokg dknb gscv"
+EMAIL_FROM=BFD SERVICE <no-reply>

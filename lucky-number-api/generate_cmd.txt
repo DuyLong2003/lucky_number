@@ -1,0 +1,1 @@
+yarn generate scaffold v1 Kingdom name:String hqImg:String money:Number gem:Number prodBoost:Number saleBoost:Number rank:Number extraExecutive:Number extraBuilding:Number logo:String showOnline:Boolean playmode:String user:String levelInfo:String

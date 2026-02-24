@@ -1,0 +1,33 @@
+version: '3'
+services:
+  # The Application
+  api_tatnientwd_bfd_vn:
+    container_name: api_tatnientwd_bfd_vn
+    build:
+      context: ./
+      dockerfile: ./node.dockerfile
+    restart: always
+    networks:
+      - traefik_traefik
+      # - default
+    working_dir: /usr/src/app
+    volumes:
+      - '/containers/data/api.tatnientwd.bfd.vn:/usr/src/app/public'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn.entrypoints=http'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn.rule=Host(`api.tatnientwd.bfd.vn`)'
+      - 'traefik.docker.network=traefik_traefik'
+      - 'traefik.http.services.api_tatnientwd_bfd_vn.loadbalancer.server.port=3000'
+
+      - 'traefik.http.middlewares.api_tatnientwd_bfd_vn-https-redirect.redirectscheme.scheme=https'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn.middlewares=api_tatnientwd_bfd_vn-https-redirect'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn-secure.rule=Host(`api.tatnientwd.bfd.vn`)'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn-secure.tls=true'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn-secure.tls.certresolver=http'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn-secure.entrypoints=https'
+      - 'traefik.http.routers.api_tatnientwd_bfd_vn-secure.service=api_tatnientwd_bfd_vn'
+
+networks:
+  traefik_traefik:
+    external: true

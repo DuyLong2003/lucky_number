@@ -1,0 +1,21 @@
+const express = require('express');
+const auth = require('../../middlewares/auth');
+const validate = require('../../middlewares/validate');
+const ${lname}Validation = require('../../validations/${lname}.validation');
+const ${lname}Controller = require('../../controllers/${lname}.controller');
+const { permission } = require('../../config/permission');
+
+const router = express.Router();
+
+router
+  .route('/')
+  .post(auth(permission.${uname}.MANAGE_${uname}), validate(${lname}Validation.create${name}), ${lname}Controller.create${name})
+  .get(auth(permission.${uname}.GET_${uname}), validate(${lname}Validation.get${name}s), ${lname}Controller.get${name}s);
+
+router
+  .route('/:${lname}Id')
+  .get(auth(permission.${uname}.GET_${uname}), validate(${lname}Validation.get${name}), ${lname}Controller.get${name})
+  .patch(auth(permission.${uname}.MANAGE_${uname}), validate(${lname}Validation.update${name}), ${lname}Controller.update${name})
+  .delete(auth(permission.${uname}.DELETE_${uname}), validate(${lname}Validation.delete${name}), ${lname}Controller.delete${name});
+
+module.exports = router;
