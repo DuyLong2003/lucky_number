@@ -42,7 +42,7 @@ const getUserById = async (id, populate) => User.findByIdAndPopulate(id, populat
  * @param {string} email
  * @returns {Promise<User>}
  */
-const getUserByEmail = async (email) => User.findOne({ email });
+const getUserByEmail = async (email) => User.findOne({ email }).populate('funcRoleId', 'name');
 
 /**
  * Update user by id

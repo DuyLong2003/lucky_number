@@ -41,9 +41,15 @@ const userSchema = mongoose.Schema(
       ref: 'UiRole',
     }],
     address: { type: String },
-    gender: { type: String, enum: GENDER, required: true },
+    gender: { type: String, enum: GENDER },
     isPasswordChange: { type: Boolean, default: false },
     status: { type: String, enum: STATUS, default: STATUS.Active },
+    validUntil: { type: Date },
+    maxParticipants: { type: Number, default: 10 },
+    notes: { type: String },
+    customLogoUrl: { type: String, default: '' },
+    brandColor: { type: String, default: '#EAB308' },
+    isVip: { type: Boolean, default: false }
   },
   {
     timestamps: true,

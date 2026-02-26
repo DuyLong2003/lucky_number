@@ -8,6 +8,11 @@ const drawHistorySchema = mongoose.Schema(
       required: true,
       unique: true
     },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
+    },
     winners: [
       {
         participantId: {
@@ -52,11 +57,11 @@ drawHistorySchema.plugin(toJSON);
 drawHistorySchema.plugin(paginate);
 
 /**
- * Get the next draw number
+ * Get the next draw number for a specific tenant
  * @returns {Promise<number>}
  */
-drawHistorySchema.statics.getNextDrawNumber = async function () {
-  const lastDraw = await this.findOne().sort({ drawNumber: -1 });
+drawHistorySchema.statics.getNextDrawNumber = async function (userId) {
+  const lastDraw = await this.findOne({ userId }).sort({ drawNumber: -1 });
   return lastDraw ? lastDraw.drawNumber + 1 : 1;
 };
 

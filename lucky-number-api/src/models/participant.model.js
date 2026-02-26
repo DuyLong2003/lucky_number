@@ -12,7 +12,6 @@ const participantSchema = mongoose.Schema(
     phoneNumber: {
       type: String,
       required: true,
-      unique: true,
       trim: true
     },
     org: {
@@ -20,8 +19,7 @@ const participantSchema = mongoose.Schema(
     },
     luckyNumber: {
       type: Number,
-      required: true,
-      unique: true
+      required: true
     },
     isWinner: {
       type: Boolean,
@@ -30,12 +28,20 @@ const participantSchema = mongoose.Schema(
     winOrder: {
       type: Number,
       default: null
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     }
   },
   {
     timestamps: true
   }
 );
+
+participantSchema.index({ phoneNumber: 1, userId: 1 }, { unique: true });
+participantSchema.index({ luckyNumber: 1, userId: 1 }, { unique: true });
 
 // add plugin that converts mongoose to json
 participantSchema.plugin(toJSON);
@@ -46,8 +52,8 @@ participantSchema.plugin(paginate);
  * @param {string} phoneNumber - The participant's phone number
  * @returns {Promise<boolean>}
  */
-participantSchema.statics.isPhoneNumberTaken = async function (phoneNumber) {
-  const participant = await this.findOne({ phoneNumber });
+participantSchema.statics.isPhoneNumberTaken = async function (phoneNumber, userId) {
+  const participant = await this.findOne({ phoneNumber, userId });
   return !!participant;
 };
 
@@ -55,8 +61,8 @@ participantSchema.statics.isPhoneNumberTaken = async function (phoneNumber) {
  * Get the next lucky number
  * @returns {Promise<number>}
  */
-participantSchema.statics.getNextLuckyNumber = async function () {
-  const lastParticipant = await this.findOne().sort({ luckyNumber: -1 });
+participantSchema.statics.getNextLuckyNumber = async function (userId) {
+  const lastParticipant = await this.findOne({ userId }).sort({ luckyNumber: -1 });
   return lastParticipant ? lastParticipant.luckyNumber + 1 : 1;
 };
 

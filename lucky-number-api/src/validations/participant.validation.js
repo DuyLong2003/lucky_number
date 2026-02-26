@@ -11,7 +11,8 @@ const registerParticipant = {
       .messages({
         'string.pattern.base': 'Phone number must be 10-11 digits'
       }),
-    org: Joi.string().required()
+    org: Joi.string().required(),
+    userId: Joi.string().custom(objectId).required()
   })
 };
 

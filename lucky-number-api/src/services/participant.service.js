@@ -8,23 +8,27 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Participant>}
  */
 const registerParticipant = async (participantBody) => {
-  const { phoneNumber, fullName, org } = participantBody;
+  const { phoneNumber, fullName, org, userId } = participantBody;
 
   // Check if phone number already exists
-  const existingParticipant = await Participant.findOne({ phoneNumber });
+  const existingParticipant = await Participant.findOne({ phoneNumber, userId });
   if (existingParticipant) {
+    existingParticipant.fullName = fullName;
+    existingParticipant.org = org;
+    await existingParticipant.save();
     return existingParticipant;
   }
 
-  // Get next lucky number
-  const luckyNumber = await Participant.getNextLuckyNumber();
+  // Get next lucky number for this specific tenant
+  const luckyNumber = await Participant.getNextLuckyNumber(userId);
 
   // Create new participant
   const participant = await Participant.create({
     fullName,
     phoneNumber,
     luckyNumber,
-    org
+    org,
+    userId
   });
 
   return participant;
@@ -45,29 +49,24 @@ const queryParticipants = async (filter, options) => {
   return participants;
 };
 
-/**
- * Get participant by id
- * @param {ObjectId} id
- * @returns {Promise<Participant>}
- */
-const getParticipantById = async (id) => Participant.findById(id);
+const getParticipantById = async (id, userId) => Participant.findOne({ _id: id, userId });
 
 /**
  * Get participant by phone number
  * @param {string} phoneNumber
  * @returns {Promise<Participant>}
  */
-const getParticipantByPhoneNumber = async (phoneNumber) => {
-  return Participant.findOne({ phoneNumber });
+const getParticipantByPhoneNumber = async (phoneNumber, userId) => {
+  return Participant.findOne({ phoneNumber, userId });
 };
 
 /**
  * Draw a random winner from participants who haven't won yet
  * @returns {Promise<Participant>}
  */
-const drawWinner = async () => {
-  // Get all participants who haven't won yet
-  const availableParticipants = await Participant.find({ isWinner: false });
+const drawWinner = async (userId) => {
+  // Get all participants who haven't won yet for this specific tenant
+  const availableParticipants = await Participant.find({ isWinner: false, userId });
 
   if (availableParticipants.length === 0) {
     throw new ApiError(httpStatus.NOT_FOUND, 'No available participants to draw');
@@ -78,7 +77,7 @@ const drawWinner = async () => {
   const winner = availableParticipants[randomIndex];
 
   // Get the next win order number
-  const winnerCount = await Participant.countDocuments({ isWinner: true });
+  const winnerCount = await Participant.countDocuments({ isWinner: true, userId });
   const nextWinOrder = winnerCount + 1;
 
   // Mark as winner with order
@@ -93,13 +92,13 @@ const drawWinner = async () => {
  * Reset all participants (remove winner status)
  * @returns {Promise<Object>}
  */
-const resetDraw = async () => {
-  // Get all winners before resetting
-  const winners = await Participant.find({ isWinner: true }).sort({ winOrder: 1 });
+const resetDraw = async (userId) => {
+  // Get all winners before resetting for this specific tenant
+  const winners = await Participant.find({ isWinner: true, userId }).sort({ winOrder: 1 });
 
   // Only save history if there are winners
   if (winners.length > 0) {
-    const drawNumber = await DrawHistory.getNextDrawNumber();
+    const drawNumber = await DrawHistory.getNextDrawNumber(userId);
 
     // Prepare winner data for history
     const winnerData = winners.map((winner) => ({
@@ -112,6 +111,7 @@ const resetDraw = async () => {
 
     // Save to history
     await DrawHistory.create({
+      userId,
       drawNumber,
       winners: winnerData,
       totalWinners: winners.length,
@@ -119,8 +119,8 @@ const resetDraw = async () => {
     });
   }
 
-  // Reset all winners
-  const result = await Participant.updateMany({ isWinner: true }, { isWinner: false, winOrder: null });
+  // Reset all winners for this specific tenant
+  const result = await Participant.updateMany({ isWinner: true, userId }, { isWinner: false, winOrder: null });
 
   return {
     message: 'Draw reset successfully',
@@ -133,8 +133,8 @@ const resetDraw = async () => {
  * Delete all participants
  * @returns {Promise<Object>}
  */
-const deleteAllParticipants = async () => {
-  //   const result = await Participant.deleteMany({});
+const deleteAllParticipants = async (userId) => {
+  //   const result = await Participant.deleteMany({ userId });
 
   return {
     message: 'All participants deleted successfully'
@@ -146,9 +146,9 @@ const deleteAllParticipants = async () => {
  * Get statistics
  * @returns {Promise<Object>}
  */
-const getStatistics = async () => {
-  const total = await Participant.countDocuments();
-  const winners = await Participant.countDocuments({ isWinner: true });
+const getStatistics = async (userId) => {
+  const total = await Participant.countDocuments({ userId });
+  const winners = await Participant.countDocuments({ isWinner: true, userId });
   const available = total - winners;
 
   return {
@@ -169,28 +169,23 @@ const queryDrawHistories = async (filter, options) => {
   return histories;
 };
 
-/**
- * Get draw history by id
- * @param {ObjectId} id
- * @returns {Promise<DrawHistory>}
- */
-const getDrawHistoryById = async (id) => DrawHistory.findById(id);
+const getDrawHistoryById = async (id, userId) => DrawHistory.findOne({ _id: id, userId });
 
 /**
  * Get draw history by draw number
  * @param {number} drawNumber
  * @returns {Promise<DrawHistory>}
  */
-const getDrawHistoryByNumber = async (drawNumber) => {
-  return DrawHistory.findOne({ drawNumber });
+const getDrawHistoryByNumber = async (drawNumber, userId) => {
+  return DrawHistory.findOne({ drawNumber, userId });
 };
 
 /**
  * Delete all draw histories
  * @returns {Promise<Object>}
  */
-const deleteAllDrawHistories = async () => {
-  const result = await DrawHistory.deleteMany({});
+const deleteAllDrawHistories = async (userId) => {
+  const result = await DrawHistory.deleteMany({ userId });
 
   return {
     message: 'All draw histories deleted successfully',

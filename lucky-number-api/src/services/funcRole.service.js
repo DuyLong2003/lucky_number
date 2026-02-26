@@ -44,8 +44,8 @@ const updateFuncRoleById = async (funcRoleId, updateBody) => {
   if (!funcRole) {
     throw new ApiError(httpStatus.NOT_FOUND, 'funcRole not found');
   }
-  if (funcRole.name === 'admin' || funcRole.name === 'user') {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'admin or user funcRole cannot be update');
+  if (funcRole.name === 'super-admin' || funcRole.name === 'user') {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'super-admin or user funcRole cannot be update');
   }
   Object.assign(funcRole, updateBody);
   await funcRole.save();
@@ -62,8 +62,8 @@ const deleteFuncRoleById = async (funcRoleId) => {
   if (!funcRole) {
     throw new ApiError(httpStatus.NOT_FOUND, 'funcRole not found');
   }
-  if (funcRole.name === 'admin' || funcRole.name === 'user') {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'admin or user funcRole cannot be delete');
+  if (funcRole.name === 'super-admin' || funcRole.name === 'user') {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'super-admin or user funcRole cannot be delete');
   }
   await FuncRole.deleteOne(funcRole._id);
   return funcRole;

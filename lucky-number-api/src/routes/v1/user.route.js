@@ -31,6 +31,10 @@ router.post(
 );
 
 router
+  .route('/public-config/:userId')
+  .get(validate(userValidation.getUser), userController.getPublicConfig);
+
+router
   .route('/:userId')
   .get(auth(permission.USER.GET_USER), validate(userValidation.getUser), userController.getUser)
   .patch(auth(permission.USER.MANAGE_USER), validate(userValidation.updateUser), userController.updateUser)

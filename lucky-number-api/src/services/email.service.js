@@ -32,10 +32,11 @@ const sendEmail = async (to, subject, text) => {
  * @returns {Promise}
  */
 const sendPasswordEmailWhenCreate = async (to, user, password) => {
-  const subject = `Well come to ${config.url}`;
-  const text = `Dear ${user.name}!,
-  The passworld off account is ${password}, please change passworld after login.
-  To login click on this link: ${config.url}/auth/login`;
+  const frontendUrl = config.url.includes('localhost') ? 'http://localhost:5173' : config.url;
+  const subject = `Welcome to BFD Service`;
+  const text = `Xin chào ${user.name}!,
+Mật khẩu của tài khoản của bạn là ${password}, hãy thay đổi mật khẩu sau khi đăng nhập.
+Để đăng nhập, hãy nhấp vào liên kết này: ${frontendUrl}/login`;
   await sendEmail(to, subject, text);
 };
 
@@ -46,12 +47,12 @@ const sendPasswordEmailWhenCreate = async (to, user, password) => {
  * @returns {Promise}
  */
 const sendResetPasswordEmail = async (to, token) => {
+  const frontendUrl = config.url.includes('localhost') ? 'http://localhost:5173' : config.url;
   const subject = 'Reset password';
-  // replace this url with the link to the reset password page of your front-end app
-  const resetPasswordUrl = `${config.url}/auth/reset-password?token=${token}`;
-  const text = `Dear user,
-To reset your password, click on this link: ${resetPasswordUrl}
-If you did not request any password resets, then ignore this email.`;
+  const resetPasswordUrl = `${frontendUrl}/auth/reset-password?token=${token}`;
+  const text = `Xin chào,
+Để thay đổi mật khẩu, hãy nhấp vào liên kết này: ${resetPasswordUrl}
+Nếu bạn không yêu cầu thay đổi mật khẩu, hãy bỏ qua email này.`;
   await sendEmail(to, subject, text);
 };
 

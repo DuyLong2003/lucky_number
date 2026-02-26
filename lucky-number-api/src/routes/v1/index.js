@@ -5,6 +5,7 @@ const funcRoleRoute = require('./funcRole.route');
 const healthCheckRoute = require('./health-check.route');
 const uiRoleRoute = require('./uiRole.route');
 const participantRoute = require('./participant.route');
+const superAdminRoute = require('./super-admin.route');
 const { setupDir } = require('../../common/funcs');
 // New Route import go here
 
@@ -31,6 +32,10 @@ const defaultRoutes = [
   {
     path: '/users',
     route: userRoute
+  },
+  {
+    path: '/super-admin',
+    route: superAdminRoute
   },
   {
     path: '/health-check',
