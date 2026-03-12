@@ -1,3 +1,15 @@
+:root {
+  /* Default Lộc Đầu Xuân Theme - Space-separated HSL */
+  --background: 0 75% 16%;
+  --surface: 0 70% 35%;
+  --primary: 45 93% 47%;
+  --primary-foreground: 0 75% 16%;
+  --text-main: 53 98% 77%;
+  --text-muted: 51 97% 63%;
+  --border: 45 93% 47%;
+  --radius: 1rem;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

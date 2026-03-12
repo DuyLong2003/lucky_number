@@ -68,19 +68,20 @@ export const RegisterPage: React.FC = () => {
 
     return (
         <div className="w-full max-w-md mx-auto">
-            <div className="bg-red-800 border bg-gradient-to-b from-red-800 to-red-900 border-yellow-600/50 rounded-2xl p-8 shadow-2xl w-full">
+            <div className="bg-surface border-4 border-primary rounded-2xl p-8 shadow-2xl w-full relative overflow-hidden transition-all">
+                <div className="absolute top-0 left-0 w-full h-1 bg-primary/30" />
                 <div className="text-center mb-10">
-                    <h2 className="text-3xl font-black text-yellow-400 uppercase tracking-tighter">
+                    <h2 className="text-3xl font-black text-primary uppercase tracking-tighter">
                         Đăng ký
                     </h2>
-                    <p className="text-yellow-200/70 text-sm mt-2 font-medium">
-                        Tạo tài khoản
+                    <p className="text-text-muted text-sm mt-2 font-medium uppercase tracking-widest">
+                        Tạo tài khoản mới
                     </p>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-yellow-400 font-bold text-xs mb-2 uppercase tracking-widest">
+                        <label className="block text-primary font-bold text-xs mb-2 uppercase tracking-widest opacity-80">
                             Tên Công Ty / Tổ Chức
                         </label>
                         <input
@@ -90,12 +91,12 @@ export const RegisterPage: React.FC = () => {
                             disabled={isLoading}
                             placeholder="VD: Công ty TNHH ABC..."
                             required
-                            className="w-full bg-red-950/60 border border-yellow-600/30 rounded-xl px-4 py-3 text-yellow-50 placeholder-yellow-200/40 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all shadow-inner"
+                            className="w-full bg-background border-2 border-primary/20 rounded-xl px-4 py-3 text-text-main placeholder-text-muted/40 focus:outline-none focus:border-primary transition-all shadow-inner"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-yellow-400 font-bold text-xs mb-2 uppercase tracking-widest">
+                        <label className="block text-primary font-bold text-xs mb-2 uppercase tracking-widest opacity-80">
                             Email
                         </label>
                         <input
@@ -105,12 +106,12 @@ export const RegisterPage: React.FC = () => {
                             placeholder="admin@company.com"
                             disabled={isLoading}
                             required
-                            className="w-full bg-red-950/60 border border-yellow-600/30 rounded-xl px-4 py-3 text-yellow-50 placeholder-yellow-200/40 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all shadow-inner"
+                            className="w-full bg-background border-2 border-primary/20 rounded-xl px-4 py-3 text-text-main placeholder-text-muted/40 focus:outline-none focus:border-primary transition-all shadow-inner"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-yellow-400 font-bold text-xs mb-2 uppercase tracking-widest">
+                        <label className="block text-primary font-bold text-xs mb-2 uppercase tracking-widest opacity-80">
                             Mật Khẩu
                         </label>
                         <div className="relative">
@@ -122,12 +123,12 @@ export const RegisterPage: React.FC = () => {
                                 disabled={isLoading}
                                 required
                                 minLength={8}
-                                className="w-full bg-red-950/60 border border-yellow-600/30 rounded-xl pl-4 pr-12 py-3 text-yellow-50 placeholder-yellow-200/40 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition-all shadow-inner font-mono"
+                                className="w-full bg-background border-2 border-primary/20 rounded-xl pl-4 pr-12 py-3 text-text-main placeholder-text-muted/40 focus:outline-none focus:border-primary transition-all shadow-inner font-mono"
                             />
                             <button
                                 type="button"
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-yellow-600 hover:text-yellow-300 transition-colors"
+                                className="absolute inset-y-0 right-0 pr-4 flex items-center text-primary/60 hover:text-primary transition-colors"
                                 tabIndex={-1}
                             >
                                 {showPassword ? (
@@ -144,20 +145,19 @@ export const RegisterPage: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Vị trí hiển thị lỗi được dời ra ngoài, bao quát toàn form */}
                     {error && (
-                        <div className="bg-red-950/80 border border-red-500/50 rounded-lg p-3 text-center">
-                            <p className="text-red-400 text-sm font-medium">{error}</p>
+                        <div className="bg-primary/10 border border-primary/30 rounded-xl p-4 text-center">
+                            <p className="text-primary text-sm font-bold uppercase tracking-tighter">{error}</p>
                         </div>
                     )}
 
                     <button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full mt-4 flex items-center justify-center gap-2 px-6 py-4 bg-yellow-500 rounded-xl font-black text-red-900 text-lg uppercase tracking-tighter shadow-lg hover:shadow-yellow-500/50 hover:-translate-y-1 active:translate-y-0 active:shadow-md transition-all disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
+                        className="w-full mt-4 flex items-center justify-center gap-2 px-6 py-4 bg-primary text-primary-foreground rounded-xl font-black text-lg uppercase tracking-widest shadow-xl hover:bg-primary/90 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed border-b-4 border-black/20"
                     >
                         {isLoading && (
-                            <svg className="animate-spin h-5 w-5 text-red-900" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <svg className="animate-spin h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
@@ -166,10 +166,10 @@ export const RegisterPage: React.FC = () => {
                     </button>
                 </form>
 
-                <div className="mt-6 text-center text-sm text-yellow-200/70">
+                <div className="mt-8 pt-6 border-t border-primary/10 text-center text-sm text-text-muted">
                     Đã có tài khoản?{" "}
-                    <Link to="/login" className="text-yellow-400 hover:text-yellow-300 underline font-bold">
-                        Đăng nhập hệ thống
+                    <Link to="/login" className="text-primary hover:underline font-black uppercase ml-1 transition-all">
+                        Đăng nhập ngay
                     </Link>
                 </div>
             </div>

@@ -58,14 +58,14 @@ export const ResultModal: React.FC<Props> = ({ userData, onClose }) => {
           &times;
         </button>
 
-        <div className="bg-white rounded-3xl overflow-hidden shadow-2xl">
+        <div className="bg-surface rounded-3xl overflow-hidden shadow-2xl border border-primary/20">
           {/* Card to be captured */}
           <div ref={cardRef}>
             <LuckyCard userData={userData} />
           </div>
 
-          <div className="p-6 bg-red-900 border-t-4 border-yellow-500">
-            <p className="text-yellow-200 text-center text-sm mb-6 leading-relaxed bg-red-950/50 p-3 rounded-lg border border-yellow-900/30">
+          <div className="p-6 bg-background border-t-4 border-primary">
+            <p className="text-text-main text-center text-sm mb-6 leading-relaxed bg-surface/50 p-3 rounded-lg border border-primary/20">
               💡 <strong>Lưu ý:</strong> Vui lòng chụp màn hình này hoặc nhấn nút lưu bên dưới để làm căn cứ đối chiếu khi trúng thưởng.
             </p>
             
@@ -73,7 +73,7 @@ export const ResultModal: React.FC<Props> = ({ userData, onClose }) => {
               <button
                 onClick={handleCapture}
                 disabled={isCapturing}
-                className="flex items-center justify-center gap-2 bg-yellow-500 hover:bg-yellow-400 text-red-900 font-bold py-3 px-4 rounded-xl transition-all active:scale-95 disabled:opacity-50"
+                className="flex items-center justify-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 px-4 rounded-xl transition-all active:scale-95 disabled:opacity-50"
               >
                 {isCapturing ? 'Đang lưu...' : (
                   <>
@@ -87,13 +87,14 @@ export const ResultModal: React.FC<Props> = ({ userData, onClose }) => {
               
               <button
                 onClick={onClose}
-                className="bg-red-700 hover:bg-red-600 text-white font-bold py-3 px-4 rounded-xl border border-red-500 transition-all active:scale-95"
+                className="bg-surface hover:bg-surface/80 text-primary-foreground font-bold py-3 px-4 rounded-xl border border-primary/30 transition-all active:scale-95"
               >
                 Đóng
               </button>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -49,7 +49,7 @@ export const RegistrationForm: React.FC<Props> = ({ onSubmit }) => {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label className="block text-yellow-500 font-bold mb-2 uppercase text-xs tracking-wider">
+        <label className="block text-primary font-bold mb-2 uppercase text-xs tracking-wider">
           Họ và tên
         </label>
         <input
@@ -57,12 +57,12 @@ export const RegistrationForm: React.FC<Props> = ({ onSubmit }) => {
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Nhập tên của bạn..."
-          className="w-full bg-red-950 border-2 border-yellow-600/50 rounded-xl px-4 py-3 text-yellow-100 placeholder-red-300 focus:outline-none focus:border-yellow-400 transition-colors"
+          className="w-full bg-background border-2 border-primary/30 rounded-xl px-4 py-3 text-text-main placeholder-red-300/50 focus:outline-none focus:border-primary transition-colors"
         />
       </div>
 
       <div>
-        <label className="block text-yellow-500 font-bold mb-2 uppercase text-xs tracking-wider">
+        <label className="block text-primary font-bold mb-2 uppercase text-xs tracking-wider">
           Số điện thoại
         </label>
         <input
@@ -70,12 +70,12 @@ export const RegistrationForm: React.FC<Props> = ({ onSubmit }) => {
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
           placeholder="090x xxx xxx"
-          className="w-full bg-red-950 border-2 border-yellow-600/50 rounded-xl px-4 py-3 text-yellow-100 placeholder-red-300 focus:outline-none focus:border-yellow-400 transition-colors"
+          className="w-full bg-background border-2 border-primary/30 rounded-xl px-4 py-3 text-text-main placeholder-red-300/50 focus:outline-none focus:border-primary transition-colors"
         />
       </div>
 
-            <div>
-        <label className="block text-yellow-500 font-bold mb-2 uppercase text-xs tracking-wider">
+      <div>
+        <label className="block text-primary font-bold mb-2 uppercase text-xs tracking-wider">
          Đơn vị
         </label>
         <input
@@ -83,12 +83,12 @@ export const RegistrationForm: React.FC<Props> = ({ onSubmit }) => {
           value={org}
           onChange={(e) => setOrg(e.target.value)}
           placeholder="Nhập đơn vị của bạn..."
-          className="w-full bg-red-950 border-2 border-yellow-600/50 rounded-xl px-4 py-3 text-yellow-100 placeholder-red-300 focus:outline-none focus:border-yellow-400 transition-colors"
+          className="w-full bg-background border-2 border-primary/30 rounded-xl px-4 py-3 text-text-main placeholder-red-300/50 focus:outline-none focus:border-primary transition-colors"
         />
       </div>
 
       {error && (
-        <p className="text-yellow-400 text-sm text-center bg-red-900/50 py-2 rounded-lg border border-yellow-900">
+        <p className="text-primary text-sm text-center bg-surface/50 py-2 rounded-lg border border-primary/30">
           ⚠️ {error}
         </p>
       )}
@@ -96,10 +96,11 @@ export const RegistrationForm: React.FC<Props> = ({ onSubmit }) => {
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-gradient-to-r from-yellow-600 to-yellow-400 hover:from-yellow-500 hover:to-yellow-300 text-red-900 font-black py-4 rounded-xl shadow-xl transform active:scale-95 transition-all uppercase tracking-widest text-lg border-b-4 border-yellow-700 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-black py-4 rounded-xl shadow-xl transform active:scale-95 transition-all uppercase tracking-widest text-lg border-b-4 border-primary/70 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isLoading ? 'Đang xử lý...' : 'Lấy Số May Mắn'}
       </button>
     </form>
+
   );
 };

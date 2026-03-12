@@ -81,7 +81,7 @@ export const DashboardPage: React.FC = () => {
     };
 
     if (isLoading) {
-        return <div className="text-yellow-400 text-center py-20">Đang tải dữ liệu Workspace...</div>;
+        return <div className="text-primary text-center py-20 animate-pulse font-bold">Đang tải dữ liệu Workspace...</div>;
     }
 
     return (
@@ -90,7 +90,7 @@ export const DashboardPage: React.FC = () => {
             <div className="absolute -top-12 right-0 flex gap-4">
                 <button
                     onClick={handleLogout}
-                    className="flex items-center gap-2 text-yellow-500/80 hover:text-red-400 font-bold uppercase tracking-widest text-sm transition-colors"
+                    className="flex items-center gap-2 text-primary/80 hover:text-red-400 font-bold uppercase tracking-widest text-sm transition-colors"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -100,21 +100,21 @@ export const DashboardPage: React.FC = () => {
             </div>
 
             {/* Header Area */}
-            <div className="flex justify-between items-center bg-red-800 border-4 border-yellow-500 rounded-2xl p-6 shadow-xl">
+            <div className="flex justify-between items-center bg-surface border-4 border-primary rounded-2xl p-6 shadow-xl">
                 <div>
-                    <h1 className="text-3xl font-black text-yellow-400 uppercase tracking-tighter">
+                    <h1 className="text-3xl font-black text-primary uppercase tracking-tighter">
                         Trang Quản Trị
                     </h1>
-                    <p className="text-yellow-200 mt-1">
+                    <p className="text-text-main mt-1">
                         Xin chào, <span className="font-bold">{config?.name || 'Đối tác'}</span>
                     </p>
                 </div>
                 <div className="flex gap-4 items-center">
                     <button
                         onClick={() => navigate('/winners')}
-                        className="bg-yellow-500 text-red-900 px-8 py-4 rounded-xl font-black text-xl uppercase shadow-[0_6px_0_rgb(180,83,9)] active:shadow-none active:translate-y-2 transition-all hover:scale-105 select-none"
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 rounded-xl font-black text-xl uppercase shadow-lg active:scale-95 transition-all select-none border-b-4 border-black/20"
                     >
-                        🎰 BẮT ĐẦU QUAY THƯỞNG
+                        BẮT ĐẦU QUAY THƯỞNG
                     </button>
                 </div>
             </div>
@@ -125,20 +125,20 @@ export const DashboardPage: React.FC = () => {
                 <div className="md:col-span-1 space-y-8">
 
                     {/* Block 1: Share Link */}
-                    <div className="bg-red-800 border-4 border-yellow-500 rounded-2xl p-6 shadow-xl relative overflow-hidden">
-                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-400 to-yellow-600" />
-                        <h3 className="text-lg font-bold text-yellow-400 uppercase mb-4">🔗 Link Chia Sẻ Khách Mời</h3>
-                        <p className="text-sm text-yellow-100/70 mb-3">Copy link này gửi cho khách mời để họ lấy số may mắn tự động trúng thưởng.</p>
+                    <div className="bg-surface border-4 border-primary rounded-2xl p-6 shadow-xl relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
+                        <h3 className="text-lg font-bold text-primary uppercase mb-4 tracking-wider">Link Chia Sẻ Khách Mời</h3>
+                        <p className="text-sm text-text-muted mb-3 italic">Copy link này gửi cho khách mời để họ lấy số may mắn tự động trúng thưởng.</p>
                         <div className="flex flex-col gap-3">
                             <input
                                 type="text"
                                 readOnly
                                 value={shareUrl}
-                                className="w-full bg-red-950 border border-yellow-600/50 rounded-lg px-3 py-2 text-yellow-200 text-sm select-all"
+                                className="w-full bg-background border border-primary/30 rounded-lg px-3 py-2 text-text-main text-sm select-all focus:outline-none focus:border-primary/60"
                             />
                             <button
                                 onClick={copyLink}
-                                className="w-full bg-yellow-600 hover:bg-yellow-500 text-red-950 font-bold py-2 rounded-lg transition-colors"
+                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-2 rounded-lg transition-all active:scale-95 shadow-md"
                             >
                                 Copy Link
                             </button>
@@ -146,46 +146,46 @@ export const DashboardPage: React.FC = () => {
                     </div>
 
                     {/* Block 2: White Label Config */}
-                    <div className="bg-red-800 border-4 border-yellow-500 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
-                        <h3 className="text-lg font-bold text-yellow-400 uppercase mb-4 flex items-center gap-2">
-                            🎨 Cấu Hình Thương Hiệu
-                            {!config?.isVip && <span className="text-xs bg-red-950 px-2 py-1 rounded-md text-yellow-600 border border-yellow-700">Gói FREE</span>}
-                        </h3>
+                    <div className="bg-surface border-4 border-primary rounded-2xl p-6 shadow-xl relative overflow-hidden group">
+                        <h1 className="text-lg font-bold text-primary uppercase mb-4 flex items-center gap-2 tracking-wider">
+                            ⚙️ Cấu hình thương hiệu
+                            {!config?.isVip && <span className="text-[10px] bg-background px-2 py-0.5 rounded-md text-primary border border-primary/30">Gói FREE</span>}
+                        </h1>
 
                         <form onSubmit={handleUpdateConfig} className={`space-y-4 ${!config?.isVip ? 'opacity-50 pointer-events-none' : ''}`}>
                             <div>
-                                <label className="block text-yellow-200 text-xs font-bold mb-1 uppercase">Tên Hiển Thị</label>
+                                <label className="block text-primary/80 text-xs font-bold mb-1 uppercase tracking-tight">Tên hiển thị</label>
                                 <input
                                     type="text"
                                     value={name}
                                     onChange={e => setName(e.target.value)}
-                                    className="w-full bg-red-950 border border-yellow-600/50 rounded-lg px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none"
+                                    className="w-full bg-background border border-primary/30 rounded-lg px-3 py-2 text-text-main focus:border-primary focus:outline-none transition-colors"
                                 />
                             </div>
                             <div>
-                                <label className="block text-yellow-200 text-xs font-bold mb-1 uppercase">URL Logo Doanh Nghiệp</label>
+                                <label className="block text-primary/80 text-xs font-bold mb-1 uppercase tracking-tight">Logo URL</label>
                                 <input
                                     type="text"
                                     value={customLogoUrl}
                                     onChange={e => setCustomLogoUrl(e.target.value)}
                                     placeholder="https://example.com/logo.png"
-                                    className="w-full bg-red-950 border border-yellow-600/50 rounded-lg px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none placeholder-yellow-200/50"
+                                    className="w-full bg-background border border-primary/30 rounded-lg px-3 py-2 text-text-main focus:border-primary focus:outline-none placeholder-text-muted/30 transition-colors"
                                 />
                             </div>
                             <div>
-                                <label className="block text-yellow-200 text-xs font-bold mb-1 uppercase">Màu Chủ Đạo (Hex)</label>
+                                <label className="block text-primary/80 text-xs font-bold mb-1 uppercase tracking-tight">Màu Chủ Đạo (HEX)</label>
                                 <div className="flex gap-2">
                                     <input
                                         type="color"
                                         value={brandColor}
                                         onChange={e => setBrandColor(e.target.value)}
-                                        className="h-10 w-10 rounded cursor-pointer bg-red-950 border border-yellow-600/50 p-1"
+                                        className="h-10 w-10 rounded cursor-pointer bg-background border border-primary/30 p-1"
                                     />
                                     <input
                                         type="text"
                                         value={brandColor}
                                         onChange={e => setBrandColor(e.target.value)}
-                                        className="flex-1 bg-red-950 border border-yellow-600/50 rounded-lg px-3 py-2 text-yellow-100 focus:border-yellow-400 focus:outline-none uppercase"
+                                        className="flex-1 bg-background border border-primary/30 rounded-lg px-3 py-2 text-text-main focus:border-primary focus:outline-none uppercase font-mono"
                                     />
                                 </div>
                             </div>
@@ -193,16 +193,16 @@ export const DashboardPage: React.FC = () => {
                             <button
                                 type="submit"
                                 disabled={!config?.isVip || isUpdating}
-                                className="w-full bg-yellow-500 text-red-900 font-bold py-2 rounded-lg transition-colors hover:bg-yellow-400 disabled:opacity-50"
+                                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-bold py-3 rounded-lg transition-all active:scale-95 shadow-lg border-b-2 border-black/20 disabled:opacity-50"
                             >
                                 {isUpdating ? 'Đang lưu...' : 'Lưu Cấu Hình'}
                             </button>
                         </form>
 
                         {!config?.isVip && (
-                            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-red-900/40 backdrop-blur-[2px]">
+                            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-background/60 backdrop-blur-[3px]">
                                 <div className="text-4xl mb-4 drop-shadow-lg">⭐ Tính năng VIP</div>
-                                <div className="text-yellow-100 font-bold text-center px-6 leading-relaxed max-w-xs">
+                                <div className="text-primary font-bold text-center px-6 leading-relaxed max-w-xs">
                                     Liên hệ Super Admin để mở khóa tùy chỉnh thương hiệu
                                 </div>
                             </div>
@@ -213,39 +213,42 @@ export const DashboardPage: React.FC = () => {
                 {/* Right Column: Participants Table */}
                 <div className="md:col-span-2">
                     {/* Block 3: Participants */}
-                    <div className="bg-red-800 border-4 border-yellow-500 rounded-2xl p-6 shadow-xl h-full">
-                        <div className="flex justify-between items-center mb-6 border-b border-yellow-600/30 pb-4">
-                            <h3 className="text-xl font-bold text-yellow-400 uppercase">
+                    <div className="bg-surface border-4 border-primary rounded-2xl p-6 shadow-xl h-full">
+                        <div className="flex justify-between items-center mb-6 border-b border-primary/20 pb-4">
+                            <h3 className="text-xl font-bold text-primary uppercase tracking-tight">
                                 👥 Danh Sách Đã Đăng Ký ({participants.length})
                             </h3>
                         </div>
 
                         <div className="overflow-x-auto max-h-[500px] overflow-y-auto custom-scrollbar">
                             <table className="w-full text-left border-collapse">
-                                <thead className="sticky top-0 bg-red-900 shadow-md">
+                                <thead className="sticky top-0 bg-background shadow-md">
                                     <tr>
-                                        <th className="py-3 px-4 text-yellow-400 font-bold text-sm uppercase tracking-wider border-b-2 border-yellow-600/50">STT</th>
-                                        <th className="py-3 px-4 text-yellow-400 font-bold text-sm uppercase tracking-wider border-b-2 border-yellow-600/50">Họ & Tên</th>
-                                        <th className="py-3 px-4 text-yellow-400 font-bold text-sm uppercase tracking-wider border-b-2 border-yellow-600/50">SĐT</th>
-                                        <th className="py-3 px-4 text-yellow-400 font-bold text-sm uppercase tracking-wider border-b-2 border-yellow-600/50">Số May Mắn</th>
+                                        <th className="py-3 px-4 text-primary font-bold text-sm uppercase tracking-wider border-b-2 border-primary/30">STT</th>
+                                        <th className="py-3 px-4 text-primary font-bold text-sm uppercase tracking-wider border-b-2 border-primary/30">Họ & Tên</th>
+                                        <th className="py-3 px-4 text-primary font-bold text-sm uppercase tracking-wider border-b-2 border-primary/30">SĐT</th>
+                                        <th className="py-3 px-4 text-primary font-bold text-sm uppercase tracking-wider border-b-2 border-primary/30 text-center">Số May Mắn</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-yellow-600/20">
+                                <tbody className="divide-y divide-primary/10">
                                     {participants.map((p, index) => (
-                                        <tr key={p.id} className="hover:bg-red-700/50 transition-colors">
-                                            <td className="py-3 px-4 text-yellow-200">{index + 1}</td>
-                                            <td className="py-3 px-4 font-semibold">{p.fullName} <span className="text-xs text-yellow-600 ml-2">{p.org}</span></td>
-                                            <td className="py-3 px-4 text-yellow-100">{p.phoneNumber}</td>
+                                        <tr key={p.id} className="hover:bg-primary/5 transition-colors">
+                                            <td className="py-3 px-4 text-text-main font-mono">{index + 1}</td>
                                             <td className="py-3 px-4">
-                                                <span className="bg-yellow-500 text-red-900 font-black px-3 py-1 rounded-md">
-                                                    {p.luckyNumber.toString().padStart(4, "0")}
+                                                <div className="font-bold text-text-main">{p.fullName}</div>
+                                                <div className="text-[10px] text-text-muted uppercase font-bold">{p.org}</div>
+                                            </td>
+                                            <td className="py-3 px-4 text-text-main/80 font-mono">{p.phoneNumber}</td>
+                                            <td className="py-1 px-4 text-center">
+                                                <span className="inline-block bg-primary text-primary-foreground font-black px-4 py-1.5 rounded-lg shadow-sm font-mono text-lg tracking-widest border-b-2 border-black/10">
+                                                    {p.luckyNumber.toString().padStart(5, "0")}
                                                 </span>
                                             </td>
                                         </tr>
                                     ))}
                                     {participants.length === 0 && (
                                         <tr>
-                                            <td colSpan={4} className="py-12 text-center text-yellow-200/50 italic">
+                                            <td colSpan={4} className="py-12 text-center text-text-muted italic">
                                                 Chưa có người chơi nào đăng ký nhận số thử vận may.
                                             </td>
                                         </tr>
@@ -258,5 +261,6 @@ export const DashboardPage: React.FC = () => {
 
             </div>
         </div>
+
     );
 };

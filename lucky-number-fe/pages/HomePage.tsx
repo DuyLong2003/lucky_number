@@ -5,6 +5,7 @@ import { ResultModal } from '../components/ResultModal';
 import { PaywallModal } from '../components/PaywallModal';
 import confetti from 'canvas-confetti';
 import { registerParticipant, getTenantConfig, TenantConfig } from '../services/api';
+import { getThemeCSS } from '../src/utils/themeGen';
 
 interface UserData {
   fullName: string;
@@ -65,7 +66,7 @@ export const HomePage: React.FC = () => {
         alert(errorMessage);
       }
     }
-  }, [tenantId]);
+  }, [tenantId, config?.brandColor]);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -73,37 +74,39 @@ export const HomePage: React.FC = () => {
 
   return (
     <>
-      {config?.customLogoUrl && (
-        <div className="flex justify-center mb-6">
-          <img src={config.customLogoUrl} alt="Logo" className="h-20 object-contain drop-shadow-lg" />
-        </div>
-      )}
-      <div
-        className="max-w-md w-full bg-red-800 border-4 rounded-3xl p-8 shadow-2xl relative mt-4 transition-colors"
-        style={{ borderColor: config?.brandColor || '#EAB308' }}
-      >
+      {config?.brandColor && (
+        <style dangerouslySetInnerHTML={{ __html: getThemeCSS(config.brandColor) }} />
+      )}      <div className="min-h-screen w-full flex flex-col items-center justify-center p-4 bg-background transition-colors duration-500">
+        {config?.customLogoUrl && (
+          <div className="flex justify-center mb-6">
+            <img src={config.customLogoUrl} alt="Logo" className="h-20 object-contain drop-shadow-lg" />
+          </div>
+        )}
         <div
-          className="absolute -top-10 left-1/2 -translate-x-1/2 text-red-900 px-6 py-2 rounded-full font-black text-lg shadow-xl whitespace-nowrap border-b-4 transition-colors"
-          style={{ backgroundColor: config?.brandColor || '#EAB308', borderColor: 'rgba(0,0,0,0.2)' }}
+          className="max-w-md w-full bg-surface border-4 border-primary rounded-3xl p-8 shadow-2xl relative mt-4 transition-all duration-500"
         >
-          NHẬN LỘC ĐẦU XUÂN
+          <div
+            className="absolute -top-10 left-1/2 -track-wide -translate-x-1/2 bg-primary text-primary-foreground px-6 py-2 rounded-full font-black text-lg shadow-xl whitespace-nowrap border-b-4 border-black/20 transition-all duration-500"
+          >
+            NHẬN LỘC ĐẦU XUÂN
+          </div>
+
+          <RegistrationForm onSubmit={handleGetNumber} />
+
+          <div className="mt-8 text-center text-text-main text-sm italic">
+            "Chúc mừng năm mới Bính Ngọ 2026 - Vạn sự như ý"
+            {config?.name && <div className="mt-2 font-bold text-primary">{config.name}</div>}
+          </div>
         </div>
 
-        <RegistrationForm onSubmit={handleGetNumber} />
+        {isModalOpen && userData && (
+          <ResultModal userData={userData} onClose={closeModal} />
+        )}
 
-        <div className="mt-8 text-center text-yellow-200 text-sm italic">
-          "Chúc mừng năm mới Bính Ngọ 2026 - Vạn sự như ý"
-          {config?.name && <div className="mt-2 font-bold">{config.name}</div>}
-        </div>
+        {isPaywallOpen && (
+          <PaywallModal onClose={() => setIsPaywallOpen(false)} />
+        )}
       </div>
-
-      {isModalOpen && userData && (
-        <ResultModal userData={userData} onClose={closeModal} />
-      )}
-
-      {isPaywallOpen && (
-        <PaywallModal onClose={() => setIsPaywallOpen(false)} />
-      )}
     </>
   );
 };

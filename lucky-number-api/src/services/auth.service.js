@@ -13,8 +13,14 @@ const { STATUS } = require('../config/constant');
  */
 const loginUserWithEmailAndPassword = async (email, password) => {
   const user = await userService.getUserByEmail(email);
-  if (!user || !(await user.isPasswordMatch(password)) || user.status === STATUS.Delete || user.status === STATUS.Lock) {
-    throw new ApiError(httpStatus.UNAUTHORIZED, 'Incorrect email or password');
+  if (!user || !(await user.isPasswordMatch(password))) {
+    throw new ApiError(httpStatus.UNAUTHORIZED, 'Email hoặc mật khẩu không chính xác.');
+  }
+  if (user.status === STATUS.Lock || user.status === STATUS.Delete) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Tài khoản công ty không hợp lệ hoặc đã bị khóa.');
+  }
+  if (user.validUntil && new Date() > new Date(user.validUntil)) {
+    throw new ApiError(httpStatus.FORBIDDEN, 'Dịch vụ đã hết hạn. Vui lòng liên hệ Admin để gia hạn.');
   }
   return user;
 };
